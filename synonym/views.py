@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from synonym.models import Word
