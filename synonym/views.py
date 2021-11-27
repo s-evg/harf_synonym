@@ -4,9 +4,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from synonym.models import Word
 import requests
-from configs import ya_token, HEADERS
+import os
 
+
+ya_token = os.environ.get('ya_token')
 URL = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key='
+HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0',
+           'accept': '*/*',
+             }
+print(ya_token)
 
 
 def get_synonym_view(request):
