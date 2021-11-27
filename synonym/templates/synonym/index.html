@@ -8,12 +8,18 @@
     <form method="get">
 		<!-- Запросим у пользователя ввести слово. -->
 		<input type="text" name="word" placeholder="Введите слово...">
-        <input type="submit" name="button">
+        <button>Найти</button>
 	</form>
 	<!-- Ниже будет список синонимов. -->
-	<h3>Синонимы к слову "{{ text }}":</h3>
-    {% for s in syn %}
-    {{ s }}<br>
+	<h3>Значения и синонимы к слову "{{ text }}":</h3>
+    {% for syn in syn_list %}
+    <span>{{ syn.tr }}</span><br>
+        <ul>
+            {% for text in syn.syn %}
+                <li>{{ text.text }}</li>
+            {% endfor %}
+        </ul>
+
     {% endfor %}
 
 </body>

@@ -12,7 +12,6 @@ URL = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key='
 HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0',
            'accept': '*/*',
              }
-print(ya_token)
 
 
 def get_synonym_view(request):
@@ -50,12 +49,13 @@ def get_synonym_view(request):
 
             syn_list = []
 
-            pprint(req_ya)
+            # pprint(req_ya)
+            print(f"GET =========>>>>>>>>>> {req_ya.get('def')}")
 
-            if len(req_ya['def']) == 0:
+            if req_ya.get('def') is None:
                 print('Некорректное слово')
                 context = {
-                    'syn': ['Некорректное слово'],
+                    'syn_list': [{'syn': [{'text': 'Некорректное слово, или пустой запрос.'}]}],
                     'word': word
 
                 }
@@ -71,14 +71,14 @@ def get_synonym_view(request):
                         tr = q.get('text')
                         syn = q.get('syn')
 
-                    syn_list.append({
-                        'tr': tr,
-                        'syn': syn,
-                    })
+                        syn_list.append({
+                            'tr': tr,
+                            'syn': syn,
+                        })
 
                 context = {
                     'text': text,
-                    'syn': syn_list
+                    'syn_list': syn_list
                 }
 
                 pprint(syn_list)
