@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Синонимы</title>
+</head>
+<body>
+    <form method="get">
+		<!-- Запросим у пользователя ввести слово. -->
+		<input type="text" name="word" placeholder="Введите слово...">
+        <input type="submit" name="button">
+	</form>
+	<!-- Ниже будет список синонимов. -->
+	<h3>Синонимы к слову "{{ text }}":</h3>
+    {% for s in syn %}
+    {{ s }}<br>
+    {% endfor %}
+
+</body>
+</html>
