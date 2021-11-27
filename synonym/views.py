@@ -21,7 +21,6 @@ def get_synonym_view(request):
     """
 
     word = request.GET.get("word")
-    print(f'REQUEST ------>>>>> {word}')
     template_name = 'synonym/index.html'
 
     if word is None:
@@ -36,11 +35,9 @@ def get_synonym_view(request):
                 'syn': syn,
                 'word': word
             }
-            print('Попали сюда')
             return render(request, template_name, context)
 
         except ObjectDoesNotExist:
-            # print('Слова нет')
 
             url = URL + ya_token + '&lang=ru-ru&text=' + word
 
@@ -49,11 +46,7 @@ def get_synonym_view(request):
 
             syn_list = []
 
-            # pprint(req_ya)
-            print(f"GET =========>>>>>>>>>> {req_ya.get('def')}")
-
             if req_ya.get('def') is None:
-                print('Некорректное слово')
                 context = {
                     'syn_list': [{'syn': [{'text': 'Некорректное слово, или пустой запрос.'}]}],
                     'word': word
@@ -80,7 +73,5 @@ def get_synonym_view(request):
                     'text': text,
                     'syn_list': syn_list
                 }
-
-                pprint(syn_list)
 
                 return render(request, template_name, context)
