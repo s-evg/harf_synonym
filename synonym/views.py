@@ -33,6 +33,14 @@ def get_synonym_view(request):
         }
         return render(request, template_name, context)
 
+    elif word == '':
+        context = {
+            'info_1': 'Пустой запрос',
+            'syn_list': [{'syn': [{'text': 'Введите слово!'}]}],
+            'word': ''
+        }
+        return render(request, template_name, context)
+
     else:
 
         try:
@@ -54,9 +62,8 @@ def get_synonym_view(request):
 
             if req_ya.get('def') == []:
                 context = {
-                    'syn_list': [{'syn': [{'text': 'Некорректное слово, или пустой запрос.'}]}],
+                    'syn_list': [{'syn': [{'text': 'Некорректное слово.'}]}],
                     'word': word
-
                 }
                 return render(request, template_name, context)
 
