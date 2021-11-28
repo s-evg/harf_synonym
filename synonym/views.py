@@ -11,6 +11,9 @@ HEADERS = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gec
            'accept': '*/*',
              }
 
+INFO_1 = 'Для того чтобы найти синонимы'
+INFO_2 = 'введите слово в поле для ввода.'
+
 
 def get_synonym_view(request):
     """
@@ -20,9 +23,15 @@ def get_synonym_view(request):
 
     word = request.GET.get("word")
     template_name = 'synonym/index.html'
-
+    print(f'WORD ===>>> {word}')
     if word is None:
-        return render(request, template_name)
+        context = {
+            'info_1': INFO_1,
+            'info_2': INFO_2,
+            'syn_list': [{'syn': [{'text': 'Введите слово!'}]}],
+            'word': ''
+        }
+        return render(request, template_name, context)
 
     else:
 
@@ -39,12 +48,11 @@ def get_synonym_view(request):
 
             url = URL + ya_token + '&lang=ru-ru&text=' + word
 
-            print(url)
             req_ya = requests.get(url=url, headers=HEADERS).json()
 
             syn_list = []
 
-            if req_ya.get('def') is None:
+            if req_ya.get('def') == []:
                 context = {
                     'syn_list': [{'syn': [{'text': 'Некорректное слово, или пустой запрос.'}]}],
                     'word': word
@@ -68,7 +76,7 @@ def get_synonym_view(request):
                         })
 
                 context = {
-                    'text': text,
+                    'word': word,
                     'syn_list': syn_list
                 }
 
