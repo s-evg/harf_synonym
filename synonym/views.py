@@ -23,7 +23,6 @@ def get_synonym_view(request):
 
     word = request.GET.get("word")
     template_name = 'synonym/index.html'
-    print(f'WORD ===>>> {word}')
     if word is None:
         context = {
             'info_1': INFO_1,
